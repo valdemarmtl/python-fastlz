@@ -7,6 +7,7 @@ setup(
     description='Python wrapper for FastLZ, a lightning-fast lossless '
                 'compression library.',
     author='Remus M. Prunescu',
+    author_email='remusmp@gmail.com',
     url='https://github.com/remusmp/python-fastlz',
     license='BSD License',
     classifiers = [
