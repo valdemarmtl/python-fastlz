@@ -3,11 +3,11 @@ from distutils.core import setup, Extension
 
 setup(
     name='fastlz',
-    version='0.0.2',
+    version='0.5.0',
     description='Python wrapper for FastLZ, a lightning-fast lossless '
                 'compression library.',
-    author='Jared Suttles',
-    url='https://github.com/jaredsuttles/python-fastlz',
+    author='Remus M. Prunescu',
+    url='https://github.com/remusmp/python-fastlz',
     license='BSD License',
     classifiers = [
         'Development Status :: 4 - Beta',
@@ -23,7 +23,7 @@ setup(
     ext_modules = [
         Extension(
             'fastlz',
-            sources=['fastlz.c', 'fastlz/fastlz.c'],
+            sources=['fastlz/fastlz.c'],
             include_dirs=['fastlz']
         )
     ]
