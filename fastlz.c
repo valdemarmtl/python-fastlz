@@ -16,31 +16,19 @@ compress(PyObject *self, PyObject *args, PyObject *kwargs)
     PyObject *result;
     const char *input;
     char *output;
-    int level = 0, input_len, output_len;
+    int input_len, output_len;
 
-    static char *arglist[] = {"string", "level", NULL};
+    static char *arglist[] = {"string", NULL};
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s#|i", arglist, &input,
-                                     &input_len, &level))
+                                     &input_len))
         return NULL;
-
-    if (level == 0) {
-        if (input_len < 65536)
-            level = 1;
-        else
-            level = 2;
-    } else if (level != 1 && level != 2) {
-        PyErr_SetString(PyExc_ValueError, "level must be either 1 or 2");
-        return NULL;
-    }
 
     output_len = sizeof(uint32_t) + (uint32_t)((input_len * 1.05) + 2);
     output = (char *) malloc(output_len);
     if (output == NULL)
         return PyErr_NoMemory();
-    memcpy(output, &input_len, sizeof(uint32_t));
 
-    output_len = fastlz_compress_level(level, input, input_len,
-                                       output + sizeof(uint32_t));
+    output_len = fastlz_compress(input, input_len, output);
     if (output_len == 0 && input_len != 0) {
         free(output);
         PyErr_SetString(FastlzError, "could not compress");
@@ -48,9 +36,9 @@ compress(PyObject *self, PyObject *args, PyObject *kwargs)
     }
 
 #if PY_MAJOR_VERSION >= 3
-    result = Py_BuildValue("y#", output, output_len + sizeof(uint32_t));
+    result = Py_BuildValue("y#", output, output_len);
 #else
-    result = Py_BuildValue("s#", output, output_len + sizeof(uint32_t));
+    result = Py_BuildValue("s#", output, output_len);
 #endif
     free(output);
     return result;

@@ -24,7 +24,7 @@ setup(
     ext_modules = [
         Extension(
             'fastlz',
-            sources=['fastlz/fastlz.c'],
+            sources=['fastlz.c', 'fastlz/fastlz.c'],
             include_dirs=['fastlz']
         )
     ]
