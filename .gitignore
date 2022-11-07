@@ -3,3 +3,8 @@ MANIFEST
 env*
 build/
 dist/
+demo.py
+venv/
+verify/
+__pycache__
+*.egg-info
